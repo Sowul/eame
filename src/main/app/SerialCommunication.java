@@ -1,12 +1,21 @@
 package main.app;
 
-import jssc.*;
+import jssc.SerialPort;
+import jssc.SerialPortException;
+import jssc.SerialPortList;
+import jssc.SerialPortTimeoutException;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class SerialCommunication {
     private SerialPort port;
+    private byte[] buffer;
+
+    public SerialCommunication() {
+        port = null;
+        buffer = new byte[100000];
+    }
 
     public List<String> getPortNames() { return Arrays.asList(SerialPortList.getPortNames()); }
 
@@ -22,7 +31,6 @@ public class SerialCommunication {
             port = new SerialPort(portName);
             port.openPort();
             port.setParams(baudRate, dataBits, stopBits, parity, true, true);
-            port.addEventListener(new MySerialPortEventListener());
         } catch (SerialPortException ex) {
             port = null;
             System.err.println(ex);
@@ -59,21 +67,14 @@ public class SerialCommunication {
         close();
     }
 
-    private class MySerialPortEventListener implements SerialPortEventListener {
-        @Override
-        public synchronized void serialEvent(SerialPortEvent event) {
-            if (event.isRXCHAR()) {
-                try {
-                    byte[] buf = port.readBytes(event.getEventValue());
-                    if (buf.length > 0) {
-                        // TODO
-                        // do whatever you want
-                        // would be needed in detektor (returns photo) and migawka (returns OK or ERROR)
-                    }
-                } catch (SerialPortException ex) {
-                    System.err.println(ex);
-                }
-            }
+    public byte[] readData (int length, int timeout) {
+        try {
+            buffer = port.readBytes(length, timeout);
+        } catch (SerialPortException ex) {
+            System.err.println(ex);
+        } catch (SerialPortTimeoutException tex) {
+            System.err.println(tex);
         }
+        return buffer;
     }
 }
