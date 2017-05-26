@@ -1,4 +1,4 @@
-package app.main.controllers;
+package main.app.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
