@@ -3,8 +3,48 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Tab fx:id="silnikTab" text="Silnik" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.main.controllers.SilnikController">
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<Tab fx:id="silnikTab" text="Silnik" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.app.controllers.SilnikController">
   <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+   <children>
+      <GridPane layoutX="36.0" layoutY="-10.0" prefHeight="320.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label fx:id="actualPosLbl" text="Aktualna pozycja" />
+            <Label fx:id="targetPosLbl" text="Docelowa pozycja" GridPane.rowIndex="1" />
+            <Label fx:id="choosePosLbl" text="Wybierz pozycję" GridPane.rowIndex="2" />
+            <Label fx:id="mvLbl" text="Przesuń o:" GridPane.rowIndex="3" />
+            <JFXTextField fx:id="actualPosField" GridPane.columnIndex="1" />
+            <JFXTextField fx:id="targetPosField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <JFXSlider fx:id="posSlider" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ButtonBar prefHeight="2.0" prefWidth="47.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <buttons>
+                  <JFXButton fx:id="mvPlusBtn" minWidth="25.0" prefHeight="26.0" prefWidth="98.0" text="+100" />
+                  <JFXButton fx:id="mvMinusBtn" minWidth="35.0" prefHeight="26.0" prefWidth="96.0" text="-100" />
+               </buttons>
+            </ButtonBar>
+            <JFXButton fx:id="chngPosBtn" prefHeight="26.0" prefWidth="362.0" text="Zmień pozycję" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+   </children>
+    </AnchorPane>
   </content>
 </Tab>
