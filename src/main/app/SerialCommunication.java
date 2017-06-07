@@ -63,6 +63,22 @@ public class SerialCommunication {
         }
     }
 
+    public void write (char[] bytes) {
+        if (!isConnected()) {
+            throw new IllegalStateException("Port is not opened!");
+        }
+        try {
+            byte[] bytes2 = new byte[bytes.length];
+            for (int i = 0; i < bytes.length; i++)
+            {
+                bytes2[i] = (byte) bytes[i];
+            }
+            port.writeBytes(bytes2);
+        } catch (SerialPortException ex) {
+            System.err.println(ex);
+        }
+    }
+
     public void dispose() {
         close();
     }

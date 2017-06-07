@@ -41,7 +41,7 @@
                   <JFXButton fx:id="mvMinusBtn" minWidth="35.0" prefHeight="26.0" prefWidth="96.0" text="-100" />
                </buttons>
             </ButtonBar>
-            <JFXButton fx:id="chngPosBtn" prefHeight="26.0" prefWidth="362.0" text="Zmień pozycję" GridPane.rowIndex="4" />
+            <JFXButton fx:id="chngPosBtn" prefHeight="26.0" prefWidth="362.0" onAction="#chngPos" text="Zmień pozycję" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>
