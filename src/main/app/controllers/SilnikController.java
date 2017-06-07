@@ -1,5 +1,6 @@
 package main.app.controllers;
 
+import javafx.event.ActionEvent;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
@@ -45,14 +46,25 @@ public class SilnikController {
     @FXML
     private JFXButton chngPosBtn;
 
+    @FXML
+    void chngPos(ActionEvent event) {
+        int position = (int) posSlider.getValue();
+        System.out.println(position);
+        sendJRKcommand(JRKCommands.JRK_SET_TARGET.com, position);
+        byte[] status = serialCommunication.readData(2, 1000);
+        String value = status.toString();
+        actualPosField.setText(value);
+    }
+
+    double last_cmd_time;
     public SerialCommunication serialCommunication = new SerialCommunication();
 
+    public SilnikController() {
+        openCommunication();
+    }
+
     public enum JRKCommands {
-        JRK_GET_TARGET(0xA3),
-        JRK_GET_FEEDBACK(0xA7),
-        JRK_GET_STATUS(0xB3),
-        JRK_SET_TARGET(0xC0),
-        JRK_SET_MOTOROFF(0xFF);
+        JRK_SET_TARGET(0xC0);
 
         private int com;
         JRKCommands(int com){
@@ -60,57 +72,33 @@ public class SilnikController {
         }
     };
 
-    public enum JRKStatus{
-        JRK_STATUS_AWAITING     (0x0001),
-        JRK_STATUS_NOPOWER      (0x0002),
-        JRK_STATUS_DRVERR       (0x0004),
-        JRK_STATUS_INVINPUT     (0x0008),
-        JRK_STATUS_DISCINPUT    (0x0010),
-        JRK_STATUS_DISCFEEDBACK (0x0020),
-        JRK_STATUS_OVERCURRENT  (0x0040),
-        JRK_STATUS_SERERROR     (0x0080),
-        JRK_STATUS_SEROVERRUN   (0x0100),
-        JRK_STATUS_RXOVERRUN    (0x0200),
-        JRK_STATUS_CRCERR       (0x0400),
-        JRK_STATUS_PROTOERR     (0x0800),
-        JRK_STATUS_TIMEOUT      (0x1000),
-        JRK_STATUS_RESERVED     (0x7000);
-
-        private int com;
-        JRKStatus(int com){
-            this.com = com;
-        }
-    };
     public void openCommunication(){
-        List<String> portNames;
-        portNames = serialCommunication.getPortNames();
-        serialCommunication.connect(portNames.get(1));
-    }
-    /* public String jrkStatusToText(int value){
-         String out = new String;
-         if (value & JRKStatus.JRK_STATUS_AWAITING)
-             out += "Awaiting command\n";
-         if (value&JRKStatus.JRK_STATUS_NOPOWER)
-             out+="No motor power\n";
-         if (value&JRKStatus.JRK_STATUS_DRVERR)
-             out+="Motor driver error\n";
-         if (value&JRKStatus.JRK_STATUS_INVINPUT)
-             out+="Invalid input\n";
-         if (value&JRKStatus.JRK_STATUS_DISCINPUT)
-             out+="Input cable disconnected\n";
-         if (value&JRKStatus.JRK_STATUS_DISCFEEDBACK)
-             out+="Feedback cable disconnected\n";
-         if (value&JRKStatus.JRK_STATUS_OVERCURRENT)
-             out+="Overcurrent\n";
-         if (value&(JRKStatus.JRK_STATUS_SERERROR|JRKStatus.JRK_STATUS_SEROVERRUN|JRKStatus.JRK_STATUS_RXOVERRUN|JRKStatus.JRK_STATUS_CRCERR|JRKStatus.JRK_STATUS_PROTOERR|JRKStatus.JRK_STATUS_TIMEOUT))
-             out+="Serial communication error\n";
-         return out;
-     }
-     */
-    /*
-    public bool sendJRKcommand(int command, int parameter){
-        if(command == JRKCommands.JRK_SET_TARGET){
-
+        List<String> portList = serialCommunication.getPortNames();
+        for(String port: portList) {
+            if(port.contains("pololu"))
+                serialCommunication.connect(port);
         }
-    }*/
+    }
+
+    public boolean sendJRKcommand(int command, int parameter){
+        if(serialCommunication == null)
+            return false;
+        if(!serialCommunication.isConnected())
+            return false;
+        last_cmd_time = System.currentTimeMillis() - last_cmd_time;
+        if(last_cmd_time <= 500000) {
+            return false;
+        }
+        last_cmd_time = System.currentTimeMillis();
+        System.out.println(parameter);
+        if(command == JRKCommands.JRK_SET_TARGET.com){
+            char[] ba = new char[2];
+            ba[0] = (char)(0xC0 + (parameter & 0x1F));
+            ba[1] = (char)((parameter >> 5) & 0x7F);
+
+            serialCommunication.write(ba);
+            return true;
+        }
+        return false;
+    }
 }
