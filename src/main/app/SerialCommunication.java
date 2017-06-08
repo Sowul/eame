@@ -5,6 +5,7 @@ import jssc.SerialPortException;
 import jssc.SerialPortList;
 import jssc.SerialPortTimeoutException;
 
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class SerialCommunication {
 
     public SerialCommunication() {
         port = null;
-        buffer = new byte[100000];
+        buffer = new byte[1024];
     }
 
     public List<String> getPortNames() { return Arrays.asList(SerialPortList.getPortNames()); }
@@ -57,6 +58,7 @@ public class SerialCommunication {
             throw new IllegalStateException("Port is not opened!");
         }
         try {
+        	System.out.println(bytes);
             port.writeBytes(bytes);
         } catch (SerialPortException ex) {
             System.err.println(ex);
@@ -84,13 +86,28 @@ public class SerialCommunication {
     }
 
     public byte[] readData (int length, int timeout) {
-        try {
-            buffer = port.readBytes(length, timeout);
+        try {        	
+        	if (port.getOutputBufferBytesCount() > 0)
+        		buffer = port.readBytes();            
         } catch (SerialPortException ex) {
             System.err.println(ex);
-        } catch (SerialPortTimeoutException tex) {
-            System.err.println(tex);
         }
         return buffer;
     }
+    
+    public byte[] readBytes() {
+    	ByteBuffer buffer = ByteBuffer.allocate(2);
+    	try {     
+    		buffer.put(port.readBytes());
+    	} catch (SerialPortException ex) {
+            System.err.println(ex);
+        }
+    	return buffer.array();
+    }
+    
+    public SerialPort getSerialPort() {
+    	return this.port;
+    }
+    
+    
 }

@@ -9,7 +9,14 @@ import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 
 public class MainController {
-
+	
+	@FXML
+	private SilnikController sc;
+	
+	public SilnikController getSC(){
+		return sc;
+	}
+	
     @FXML
     private BorderPane borderPane;
 
@@ -18,18 +25,8 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        try{
-            Tab migawkaTab = FXMLLoader.load(getClass().getResource("/resources/Migawka.fxml"));
-            Tab silnikTab = FXMLLoader.load(getClass().getResource("/resources/Silnik.fxml"));
-            Tab detektorTab = FXMLLoader.load(getClass().getResource("/resources/Detektor.fxml"));
-
-            tabPane.getTabs().add(migawkaTab);
-            tabPane.getTabs().add(silnikTab);
-            tabPane.getTabs().add(detektorTab);
-
-            borderPane.setCenter(tabPane);
-        }catch(IOException ioe){
-
-        }
+    	borderPane.setCenter(tabPane);
     }
+    
+    
 }
