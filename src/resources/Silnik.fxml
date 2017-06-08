@@ -42,7 +42,6 @@
                </buttons>
             </ButtonBar>
             <JFXButton fx:id="chngPosBtn" prefHeight="26.0" prefWidth="362.0" onAction="#chngPos" text="Zmień pozycję" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-            <JFXButton fx:id="readDataBtn" prefHeight="26.0" prefWidth="362.0" onAction="#readDataPololu" text="Odczytaj z pololu" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

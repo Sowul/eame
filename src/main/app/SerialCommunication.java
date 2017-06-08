@@ -84,16 +84,6 @@ public class SerialCommunication {
     public void dispose() {
         close();
     }
-
-    public byte[] readData (int length, int timeout) {
-        try {        	
-        	if (port.getOutputBufferBytesCount() > 0)
-        		buffer = port.readBytes();            
-        } catch (SerialPortException ex) {
-            System.err.println(ex);
-        }
-        return buffer;
-    }
     
     public byte[] readBytes() {
     	ByteBuffer buffer = ByteBuffer.allocate(2);
