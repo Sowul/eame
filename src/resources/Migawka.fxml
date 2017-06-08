@@ -31,16 +31,16 @@
           </rowConstraints>
           <children>
             <JFXComboBox fx:id="filterCB" prefHeight="26.0" prefWidth="300.0" promptText="Wybierz filtr" />
-            <JFXButton fx:id="filterBtn" prefHeight="26.0" prefWidth="362.0" text="Ustaw filtr" GridPane.columnIndex="1" />
+            <JFXButton fx:id="filterBtn" prefHeight="26.0" prefWidth="362.0" text="Ustaw filtr" onAction="#setFilterType" GridPane.columnIndex="1" />
             <JFXSlider fx:id="openingTimeSlider" GridPane.rowIndex="2" />
-            <JFXButton fx:id="openingTimeBtn" prefHeight="26.0" prefWidth="331.0" text="Ustaw czas otwarcia migawki" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <JFXButton fx:id="operatingModeBtn" prefHeight="26.0" prefWidth="331.0" text="Ustaw tryb pracy" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <JFXButton fx:id="tablePositionBtn" prefHeight="26.0" prefWidth="331.0" text="Ustaw pozycję stolika" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <JFXButton prefHeight="26.0" prefWidth="331.0" text="Wykonanie ekspozycji" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <JFXButton prefHeight="26.0" prefWidth="331.0" text="Otwarcie migawki" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <JFXButton prefHeight="26.0" prefWidth="331.0" text="Zamknięcie migawki" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <JFXButton prefHeight="26.0" prefWidth="331.0" text="Kalibracja migawki" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <JFXButton prefHeight="26.0" prefWidth="331.0" text="Ustawienie bieżącej pozycji stolika na 0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <JFXButton fx:id="openingTimeBtn" prefHeight="26.0" prefWidth="331.0" text="Ustaw czas otwarcia migawki" onAction="#setOpeningTime" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <JFXButton fx:id="operatingModeBtn" prefHeight="26.0" prefWidth="331.0" text="Ustaw tryb pracy" onAction="#setOperatingMode" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <JFXButton fx:id="tablePositionBtn" prefHeight="26.0" prefWidth="331.0" text="Ustaw pozycję stolika" onAction="#setTablePosition" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <JFXButton prefHeight="26.0" prefWidth="331.0" text="Wykonanie ekspozycji" onAction="#executeExposition" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <JFXButton prefHeight="26.0" prefWidth="331.0" text="Otwarcie migawki" onAction="#openSnapshot" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <JFXButton prefHeight="26.0" prefWidth="331.0" text="Zamknięcie migawki" onAction="#closeSnapshot" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <JFXButton prefHeight="26.0" prefWidth="331.0" text="Kalibracja migawki" onAction="#calibrateSnapshot" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <JFXButton prefHeight="26.0" prefWidth="331.0" text="Ustawienie bieżącej pozycji stolika na 0" onAction="#setTablePositionToZero" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <JFXComboBox fx:id="operatingModeCB" prefHeight="26.0" prefWidth="300.0" promptText="Wybierz tryb pracy" GridPane.rowIndex="1" />
             <JFXSlider fx:id="tablePositionSlider" GridPane.rowIndex="3" />
           </children>

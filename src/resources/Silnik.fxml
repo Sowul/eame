@@ -34,14 +34,15 @@
             <Label fx:id="mvLbl" text="Przesuń o:" GridPane.rowIndex="3" />
             <JFXTextField fx:id="actualPosField" GridPane.columnIndex="1" />
             <JFXTextField fx:id="targetPosField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <JFXSlider fx:id="posSlider" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <JFXSlider fx:id="posSlider" GridPane.columnIndex="1" GridPane.rowIndex="2" max="3500.0" />
             <ButtonBar prefHeight="2.0" prefWidth="47.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <buttons>
-                  <JFXButton fx:id="mvPlusBtn" minWidth="25.0" prefHeight="26.0" prefWidth="98.0" text="+100" />
-                  <JFXButton fx:id="mvMinusBtn" minWidth="35.0" prefHeight="26.0" prefWidth="96.0" text="-100" />
+               	  <JFXButton fx:id="mvMinusBtn" minWidth="25.0" prefHeight="26.0" prefWidth="96.0" text="-100" onAction="#chngMinus" />
+                  <JFXButton fx:id="mvPlusBtn" minWidth="35.0" prefHeight="26.0" prefWidth="98.0" text="+100" onAction="#chngPlus" />
                </buttons>
             </ButtonBar>
-            <JFXButton fx:id="chngPosBtn" prefHeight="26.0" prefWidth="362.0" onAction="#chngPos" text="Zmień pozycję" GridPane.rowIndex="4" />
+            <JFXButton fx:id="chngPosBtn" prefHeight="26.0" prefWidth="362.0" onAction="#chngPos" text="Zmień pozycję" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <JFXButton fx:id="readDataBtn" prefHeight="26.0" prefWidth="362.0" onAction="#readDataPololu" text="Odczytaj z pololu" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>
