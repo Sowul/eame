@@ -3,7 +3,6 @@ package main.app.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXSlider;
@@ -49,7 +48,8 @@ public class MigawkaController implements Initializable {
         char[] calibration = new char[2];
         calibration[0] = 'k';
         calibration[1] = '\r';
-        sendByte = convertChatToByte(calibration);
+
+        sendByte = convertCharToByte(calibration);
         serialCommunication.write(sendByte);
     }
 
@@ -61,7 +61,8 @@ public class MigawkaController implements Initializable {
         char[] csnapshot = new char[2];
         csnapshot[0] = 'c';
         csnapshot[1] = '\r';
-        sendByte = convertChatToByte(csnapshot);
+        
+        sendByte = convertCharToByte(csnapshot);
         serialCommunication.write(sendByte);
     }
 
@@ -73,7 +74,8 @@ public class MigawkaController implements Initializable {
         char[] blink = new char[2];
         blink[0] = 'b';
         blink[1] = '\r';
-        sendByte = convertChatToByte(blink);
+        
+        sendByte = convertCharToByte(blink);
         serialCommunication.write(sendByte);
     }
 
@@ -85,7 +87,8 @@ public class MigawkaController implements Initializable {
         char[] snapshot = new char[2];
         snapshot[0] = 'o';
         snapshot[1] = '\r';
-        sendByte = convertChatToByte(snapshot);
+        
+        sendByte = convertCharToByte(snapshot);
         serialCommunication.write(sendByte);
     }
 
@@ -98,6 +101,7 @@ public class MigawkaController implements Initializable {
         filter[0] = 'n';
         filter[1] = ' ';
         filter[2] = '{';
+        
         String typeFilter = filterCB.getValue().toString();
 
         if(typeFilter.equals("Mosiadz 2.04 mm")) {
@@ -118,16 +122,12 @@ public class MigawkaController implements Initializable {
         else if(typeFilter.equals("Aluminium 1 mm")) {
         	filter[3] = '5';
         }
-        else{
-            //
-        }
+        
         filter[4] = '}';
         filter[5] = '\r';
-
-        if (typeFilter != null){
-            sendByte = convertChatToByte(filter);
-            serialCommunication.write(sendByte);
-        }
+        
+        sendByte = convertCharToByte(filter);
+        serialCommunication.write(sendByte);
     }
 
     /*
@@ -139,24 +139,28 @@ public class MigawkaController implements Initializable {
         time[0] = 't';
         time[1] = ' ';
         time[2] = '{';
+        
+        // odczyt ze slidera
         time[3] = openingTimeSlider.getIndicatorPosition().toString().charAt(0);
+        
         time[4] = '}';
         time[5] = '\r';
-        sendByte = convertChatToByte(time);
+        
+        sendByte = convertCharToByte(time);
         serialCommunication.write(sendByte);
     }
 
     /*
      * Wybierz tryb pracy
      */
-
     @FXML
     void setOperatingMode(ActionEvent event) {
     	char[] operation = new char[6];
     	operation[0] = 'm';
     	operation[1] = ' ';
     	operation[2] = '{';
-        String operatingMode = operatingModeCB.getValue().toString();
+        
+    	String operatingMode = operatingModeCB.getValue().toString();
 
         if(operatingMode.equals("Bierny naciśnięcie przycisku na panelu")) {
             operation[3] = '0';
@@ -167,13 +171,12 @@ public class MigawkaController implements Initializable {
         else if(operatingMode.equals("Aktywny po otwarciu migawki")) {
             operation[3] = '2';
         }
-        else{}
+        
         operation[4] = '}';
         operation[5] = '\r';
-        if (operation != null){
-            sendByte = convertChatToByte(operation);
-            serialCommunication.write(sendByte);
-        }
+        
+        sendByte = convertCharToByte(operation);
+        serialCommunication.write(sendByte);
     }
 
     /*
@@ -185,10 +188,14 @@ public class MigawkaController implements Initializable {
         position[0] = 'p';
         position[1] = ' ';
         position[2] = '{';
+
+        // odczyt ze slidera
         position[3] = tablePositionSlider.getIndicatorPosition().toString().charAt(0);
+
         position[4] = '}';
         position[5] = '\r';
-        sendByte = convertChatToByte(position);
+
+        sendByte = convertCharToByte(position);
         serialCommunication.write(sendByte);
     }
 
@@ -200,37 +207,40 @@ public class MigawkaController implements Initializable {
     	char[] zero = new char[2];
     	zero[0] = 'z';
     	zero[1] = '\r';
-        sendByte = convertChatToByte(zero);
+
+    	sendByte = convertCharToByte(zero);
         serialCommunication.write(sendByte);
     }
 
     public void setPort(String s)
     {
-        String portName = s; // Przykładowa nazwa portu
+        String portName = s;
         serialCommunication.connect(portName);
     }
 
-    public byte[] convertChatToByte(char[] buffer)
+    public byte[] convertCharToByte(char[] buffer)
     {
         byte[] b = new byte[buffer.length];
         for (int i = 0; i < b.length; i++)
-        {
             b[i] = (byte) buffer[i];
-            System.out.println(b[i]);
-        }
 
         return b;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
+        // migawka jest na COM1
         setPort("COM1");
+
+        // dodanie elementów do listy filtrów
         filterCB.getItems().addAll("Mosiądz 2.04 mm",
         		"Mosiądz 0.68 mm",
         		"Miedź 0.17 mm",
         		"Ołów 0.5 mm",
         		"Pustka",
         		"Aluminium 1 mm");
+
+        // dodanie elementów do listy pracy
         operatingModeCB.getItems().addAll("Bierny naciśnięcie przycisku na panelu",
         		"Aktywny przed otwarciem migawki",
         		"Aktywny po otwarciu migawki");
