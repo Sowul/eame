@@ -60,20 +60,20 @@ public class SilnikController {
 
     @FXML
     void chngPos(ActionEvent event) {
-    	targetPosField.setText(posSlider.getValue()+"");
         int position = (int) posSlider.getValue();
+    	targetPosField.setText(position+"");
         System.out.println(position);
         sendJRKcommand(JRKCommands.JRK_SET_TARGET.com, position);                
     }
     
     @FXML
     void chngPlus(){
-    	posSlider.setValue(posSlider.getValue() + 100);
+    	posSlider.setValue((int) posSlider.getValue() + 100);
     }
     
     @FXML
     void chngMinus(){
-    	posSlider.setValue(posSlider.getValue() - 100);
+    	posSlider.setValue((int) posSlider.getValue() - 100);
     }
 
     public SerialCommunication serialCommunication = new SerialCommunication();
