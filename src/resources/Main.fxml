@@ -3,10 +3,9 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.app.controllers.MainController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.app.controllers.MainController">
    <center>
-      <JFXTabPane fx:id="tabPane" BorderPane.alignment="CENTER" >
+      <JFXTabPane fx:id="tabPane" style="-fx-border-color: #42A5F5;" BorderPane.alignment="CENTER">
       	<fx:include fx:id="migawka" source="Migawka.fxml" />
       	<fx:include fx:id="silnik" source="Silnik.fxml" />
       </JFXTabPane>
